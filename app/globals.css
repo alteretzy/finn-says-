@@ -1,0 +1,354 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Primary — Deep Blue (FinnSays / QT Capital "Previous Blue") */
+  --color-primary-black: #000000;
+  --color-primary-blue: #0055FF;
+  --color-primary-blue-hover: #0044CC;
+  --color-primary-blue-light: rgba(0, 85, 255, 0.1);
+
+  /* Status */
+  --color-status-success: #10B981;
+  --color-status-error: #EF4444;
+  --color-status-warning: #F59E0B;
+
+  /* Animation */
+  --animate-shimmer: shimmer 8s linear infinite;
+  --animate-spin-slow: spin 1.5s linear infinite;
+}
+
+/* ── Base ────────────────────────────────────── */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #000000;
+  color: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 300;
+}
+
+/* ── Ambient Edge Glow (QT Capital "backlit" effect) ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(0, 85, 255, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(0, 85, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 85, 255, 0.03) 0%, transparent 40%);
+}
+
+/* ── Scrollbar Hide ──────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Shimmer Animation ───────────────────────── */
+@keyframes shimmer {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.4) 25%,
+      rgba(255, 255, 255, 0.9) 50%,
+      rgba(255, 255, 255, 0.4) 75%,
+      rgba(255, 255, 255, 0.9) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 8s linear infinite;
+}
+
+/* ── Gradient Text ───────────────────────────── */
+.gradient-text {
+  background: linear-gradient(to right, #ffffff, #6b7280, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass Morphism ──────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Hover Glow ──────────────────────────────── */
+.hover-glow {
+  position: relative;
+  transition: all 300ms;
+}
+
+.hover-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 300ms;
+  background: radial-gradient(circle at center,
+      rgba(99, 102, 241, 0.08) 0%,
+      transparent 70%);
+}
+
+.hover-glow:hover::before {
+  opacity: 1;
+}
+
+/* ── Skeleton Shimmer ────────────────────────── */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.03) 25%,
+      rgba(255, 255, 255, 0.06) 50%,
+      rgba(255, 255, 255, 0.03) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+/* ── Price Flash ─────────────────────────────── */
+@keyframes flash-green {
+  0% {
+    background-color: rgba(16, 185, 129, 0.1);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flash-up {
+  animation: flash-green 1s ease-out;
+}
+
+.flash-down {
+  animation: flash-red 1s ease-out;
+}
+
+/* ── Custom Scrollbar ───────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Focus Visible (Accessibility) ──────────────── */
+:focus-visible {
+  outline: 2px solid #6366F1;
+  outline-offset: 2px;
+}
+
+/* ── Card Hover ─────────────────────────────────── */
+.card-hover {
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 400ms;
+}
+
+.card-hover:hover {
+  transform: scale(1.01);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Glass Hover ────────────────────────────────── */
+.glass-hover {
+  transition: background 300ms, border-color 300ms;
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Infinite Scroll ────────────────────────────── */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 40s linear infinite;
+}
+
+/* ── Selection ──────────────────────────────────── */
+::selection {
+  background: rgba(0, 85, 255, 0.3);
+  color: white;
+}
+
+/* ── Skip Link (Accessibility) ─────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  background: #ffffff;
+  color: #000000;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 6px 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* ── Screen-Reader Only ────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Focus for Mouse Users ─────────────────────────── */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Error Page ────────────────────────────────────── */
+.error-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.error-content {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 48px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.error-content h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.error-message {
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 32px;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.error-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-button-primary,
+.error-button-secondary {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.error-button-primary {
+  background: #0055FF;
+  color: white;
+  border: none;
+}
+
+.error-button-primary:hover {
+  background: #0044CC;
+  transform: translateY(-1px);
+}
+
+.error-button-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.error-button-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
